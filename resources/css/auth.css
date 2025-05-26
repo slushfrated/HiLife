@@ -1,0 +1,96 @@
+body, html {
+    height: 100%;
+    margin: 0;
+    font-family: 'Segoe UI', sans-serif;
+    background: #8B6842;
+    color: #fff;
+}
+.auth-bg {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+.auth-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 2rem;
+}
+.date-box {
+    background: #4B3A2F;
+    padding: 0.5rem 1.5rem;
+    border-radius: 0.5rem;
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+}
+.time-box {
+    margin-left: 1.5rem;
+    font-weight: bold;
+    font-size: 1.2rem;
+}
+.brand-right {
+    font-size: 1.5rem;
+    letter-spacing: 0.1em;
+}
+.auth-content {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.brand-large {
+    font-size: 4rem;
+    font-weight: bold;
+    margin-right: 3rem;
+    line-height: 1;
+}
+.welcome {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.sun-icon {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+}
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin: 1.5rem 0;
+    width: 300px;
+}
+input[type="text"], input[type="password"] {
+    padding: 0.75rem;
+    border-radius: 0.5rem;
+    border: none;
+    font-size: 1rem;
+    color: #333;
+}
+.btn-green {
+    background: #5C6E58 !important;
+    color: #fff !important;
+    border: none !important;
+    border-radius: 0.5rem !important;
+    padding: 0.75rem 0 !important;
+    font-size: 1.1rem !important;
+    cursor: pointer !important;
+    box-shadow: 2px 2px 4px #6e5445 !important;
+    transition: background 0.2s !important;
+}
+.btn-green:hover, .btn-green:focus {
+    background: #4a5947 !important;
+}
+.test-green {
+    background: #5C6E58 !important;
+    color: #fff !important;
+}
+.switch-link {
+    margin-top: 0.5rem;
+    font-size: 0.95rem;
+}
+.switch-link a {
+    color: #fff;
+    text-decoration: underline;
+}

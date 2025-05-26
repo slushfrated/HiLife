@@ -1,0 +1,19 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.btn-green {
+    background: #5C6E58 !important;
+    color: #fff !important;
+    border: none !important;
+    border-radius: 0.5rem !important;
+    padding: 0.75rem 0 !important;
+    font-size: 1.1rem !important;
+    cursor: pointer !important;
+    box-shadow: 2px 2px 4px #6e5445 !important;
+    transition: background 0.2s !important;
+}
+.btn-green:hover, .btn-green:focus {
+    background: #4a5947 !important;
+}
+
