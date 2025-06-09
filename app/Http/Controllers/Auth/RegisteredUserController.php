@@ -40,6 +40,17 @@ class RegisteredUserController extends Controller
             'password' => Hash::make($request->password),
         ]);
 
+        // Assign Classic theme by default
+        $classicTheme = \App\Models\Theme::where('name', 'Classic')->first();
+        if ($classicTheme) {
+            $user->current_theme_id = $classicTheme->id;
+            $user->save();
+        }
+
+        \App\Models\Task::assignSystemQuestsToUser($user);
+
+        $user->checkAndUnlockAchievements();
+
         event(new Registered($user));
 
         Auth::login($user);

@@ -5,6 +5,8 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Task;
 use App\Http\Controllers\NoteController;
+use App\Http\Controllers\AchievementController;
+use App\Http\Controllers\CalendarController;
 
 /*
 |--------------------------------------------------------------------------
@@ -34,6 +36,8 @@ Route::middleware(['auth', 'has.name'])->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    Route::post('/profile/theme', [ProfileController::class, 'updateTheme'])->name('profile.theme');
+    Route::get('/profile/{id}', [\App\Http\Controllers\ProfileController::class, 'show'])->name('profile.show');
 });
 
 Route::middleware(['auth'])->group(function () {
@@ -42,6 +46,10 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('tasks', \App\Http\Controllers\TaskController::class);
     Route::get('/quests', [\App\Http\Controllers\TaskController::class, 'quests'])->name('quests');
     Route::post('/notes/update', [NoteController::class, 'update'])->name('notes.update');
+    Route::get('/leaderboard', [\App\Http\Controllers\LeaderboardController::class, 'index'])->name('leaderboard');
+    Route::get('/achievements', [AchievementController::class, 'index'])->name('achievements');
+    Route::post('/tasks/{task}/complete', [\App\Http\Controllers\TaskController::class, 'complete'])->name('tasks.complete');
+    Route::get('/calendar', [CalendarController::class, 'index'])->name('calendar');
 });
 
 require __DIR__.'/auth.php';

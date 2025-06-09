@@ -26,13 +26,23 @@ class ProfileController extends Controller
      */
     public function update(ProfileUpdateRequest $request): RedirectResponse
     {
-        $request->user()->fill($request->validated());
+        $user = $request->user();
+        $user->fill($request->validated());
 
-        if ($request->user()->isDirty('email')) {
-            $request->user()->email_verified_at = null;
+        if ($request->hasFile('profile_picture')) {
+            // Delete old profile picture if exists
+            if ($user->profile_picture && \Storage::disk('public')->exists($user->profile_picture)) {
+                \Storage::disk('public')->delete($user->profile_picture);
+            }
+            $path = $request->file('profile_picture')->store('profile_pictures', 'public');
+            $user->profile_picture = $path;
         }
 
-        $request->user()->save();
+        if ($user->isDirty('email')) {
+            $user->email_verified_at = null;
+        }
+
+        $user->save();
 
         return Redirect::route('profile.edit')->with('status', 'profile-updated');
     }
@@ -81,5 +91,26 @@ class ProfileController extends Controller
 
         // Redirect to dashboard or home
         return redirect()->route('dashboard')->with('success', 'Name set successfully!');
+    }
+
+    public function updateTheme(Request $request)
+    {
+        $request->validate([
+            'current_theme_id' => 'required|exists:themes,id',
+        ]);
+        $user = $request->user();
+        $user->current_theme_id = $request->current_theme_id;
+        $user->save();
+        return redirect()->back()->with('status', 'Theme updated!');
+    }
+
+    public function show($id)
+    {
+        $user = \App\Models\User::findOrFail($id);
+        $completedQuests = $user->tasks()->where('is_completed', true)->count();
+        $achievements = $user->achievements;
+        $currentStreak = $user->current_streak ?? 0;
+        $longestStreak = $user->longest_streak ?? 0;
+        return view('profile.show', compact('user', 'completedQuests', 'achievements', 'currentStreak', 'longestStreak'));
     }
 }

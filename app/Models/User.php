@@ -23,6 +23,8 @@ class User extends Authenticatable
         'password',
         'exp',
         'level',
+        'current_theme_id',
+        'profile_picture',
     ];
 
     /**
@@ -117,5 +119,26 @@ class User extends Authenticatable
                 ]);
             }
         }
+        // Streak achievements
+        $streakAchievements = \App\Models\Achievement::where('type', 'streak')->get();
+        foreach ($streakAchievements as $achievement) {
+            $alreadyUnlocked = $this->achievements()->where('achievement_id', $achievement->id)->exists();
+            if (!$alreadyUnlocked && $this->current_streak >= $achievement->target) {
+                $this->achievements()->attach($achievement->id, [
+                    'unlocked_at' => now(),
+                    'progress' => $this->current_streak
+                ]);
+            } elseif ($alreadyUnlocked) {
+                // Optionally update progress
+                $this->achievements()->updateExistingPivot($achievement->id, [
+                    'progress' => $this->current_streak
+                ]);
+            }
+        }
+    }
+
+    public function theme()
+    {
+        return $this->belongsTo(Theme::class, 'current_theme_id');
     }
 }

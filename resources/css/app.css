@@ -17,3 +17,27 @@
     background: #4a5947 !important;
 }
 
+input[type="text"], input[type="email"], input[type="password"], textarea {
+  color: #444 !important;
+  background: #fff !important;
+}
+
+body[data-theme="night-owl"] input[type="text"],
+body[data-theme="night-owl"] input[type="email"],
+body[data-theme="night-owl"] input[type="password"],
+body[data-theme="night-owl"] textarea {
+  color: #fff !important;
+  background: #23243a !important;
+}
+
+input::placeholder, textarea::placeholder {
+  color: #888 !important;
+  opacity: 1 !important;
+}
+
+body[data-theme="night-owl"] input::placeholder,
+body[data-theme="night-owl"] textarea::placeholder {
+  color: #c0caf5 !important;
+  opacity: 1 !important;
+}
+

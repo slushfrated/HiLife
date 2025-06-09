@@ -16,7 +16,7 @@
             <h2 style="font-size:2rem; font-weight:400; margin-bottom:2rem; color:#fff;">Sign Up</h2>
             <form method="POST" action="{{ route('register') }}">
                 @csrf
-                <input type="text" name="email" placeholder="Email or mobile number" required autofocus style="width:100%; padding:0.75rem; border-radius:0.5rem; border:none; font-size:1rem; color:#333; margin-bottom:1.5rem; box-shadow:2px 2px 4px #6e5445;">
+                <input type="text" name="email" placeholder="Email" required autofocus style="width:100%; padding:0.75rem; border-radius:0.5rem; border:none; font-size:1rem; color:#333; margin-bottom:1.5rem; box-shadow:2px 2px 4px #6e5445;">
                 <input type="password" name="password" placeholder="Password" required style="width:100%; padding:0.75rem; border-radius:0.5rem; border:none; font-size:1rem; color:#333; margin-bottom:1.5rem; box-shadow:2px 2px 4px #6e5445;">
                 <input type="password" name="password_confirmation" placeholder="Confirm Password" required style="width:100%; padding:0.75rem; border-radius:0.5rem; border:none; font-size:1rem; color:#333; margin-bottom:2rem; box-shadow:2px 2px 4px #6e5445;">
                 <button type="submit" class="btn-green" style="width:100%; font-size:1.3rem; box-shadow:2px 2px 4px #6e5445;">Sign Up</button>

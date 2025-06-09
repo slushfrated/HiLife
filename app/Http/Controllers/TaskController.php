@@ -13,8 +13,7 @@ class TaskController extends Controller
      */
     public function index()
     {
-        $tasks = Auth::user()->tasks()->latest()->get();
-        return view('tasks.index', compact('tasks'));
+        return redirect()->route('quests');
     }
 
     /**
@@ -34,7 +33,15 @@ class TaskController extends Controller
             'title' => 'required|string|max:255',
             'description' => 'nullable|string',
             'deadline' => 'nullable|date',
+            'priority' => 'required|in:low,medium,high',
         ]);
+        // Set EXP based on priority
+        $priorityExp = [
+            'low' => 20,
+            'medium' => 50,
+            'high' => 75
+        ];
+        $validated['exp'] = $priorityExp[$validated['priority']] ?? 50;
         $task = Auth::user()->tasks()->create($validated);
         return redirect()->route('dashboard')->with('success', 'Task created!');
     }
@@ -95,7 +102,9 @@ class TaskController extends Controller
                 $task->save();
                 // Add EXP for completing a task
                 $user = Auth::user();
-                $user->addExp(50); // 50 EXP per completed task
+                $isOverdue = $task->deadline && now('Asia/Jakarta')->gt(\Carbon\Carbon::parse($task->deadline, 'Asia/Jakarta'));
+                $expAmount = $isOverdue ? 20 : 50;
+                $user->addExp($expAmount); // Reduced EXP for overdue
                 $user->refresh(); // Refresh user data
                 $user->checkAndUnlockAchievements();
             }
@@ -138,20 +147,31 @@ class TaskController extends Controller
     public function quests()
     {
         $activeTasks = Auth::user()->tasks()
-            ->where(function($query) {
-                $query->where('is_completed', false)
-                    ->orWhere(function($q) {
-                        $q->where('is_completed', true)
-                          ->where('completed_at', '>=', now()->subSeconds(5));
-                    });
-            })
+            ->where('is_completed', false)
             ->latest()
             ->get();
         $completedTasks = Auth::user()->tasks()
             ->where('is_completed', true)
-            ->where('completed_at', '<', now()->subSeconds(5))
             ->latest('completed_at')
             ->get();
         return view('tasks.quests', compact('activeTasks', 'completedTasks'));
+    }
+
+    public function complete(Task $task)
+    {
+        $this->authorizeTask($task);
+        if (!$task->is_completed) {
+            $task->is_completed = true;
+            $task->completed_at = now();
+            $task->save();
+            // Add EXP for completing a task
+            $user = Auth::user();
+            $user->addExp(50); // 50 EXP per completed task
+            $user->refresh();
+            $user->checkAndUnlockAchievements();
+            session()->flash('just_completed_task', true);
+            session()->flash('just_completed_task_id', $task->id);
+        }
+        return redirect()->route('quests')->with('success', 'Task completed!');
     }
 }
