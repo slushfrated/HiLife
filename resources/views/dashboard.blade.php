@@ -68,7 +68,7 @@
                                         $isOverdue = !$task->is_completed && \Carbon\Carbon::now('Asia/Jakarta')->gt(\Carbon\Carbon::parse($task->deadline, 'Asia/Jakarta'));
                                         $expAmount = $task->source === 'user' ? ($isOverdue ? 20 : 50) : 50;
                                     @endphp
-                                    <span style="display:inline-block; font-size:0.98rem; font-weight:bold; color:#fff; background:#7ed957; border-radius:0.5rem; padding:0.18rem 0.7rem; font-family:'Segoe UI',sans-serif; margin-left:0.7rem; white-space:nowrap; flex-shrink:0;">+{{ $expAmount }} EXP</span>
+                                    <span style="display:inline-block; font-size:0.98rem; font-weight:bold; color:#fff; background:#473633; border-radius:0.5rem; padding:0.18rem 0.7rem; font-family:'Segoe UI',sans-serif; margin-left:0.7rem; white-space:nowrap; flex-shrink:0;">+{{ $expAmount }} EXP</span>
                                 </div>
                                 <div style="display:flex; align-items:flex-start; gap:1rem; width:100%; margin-top:0.2rem;">
                                     @if(!empty($task->description))

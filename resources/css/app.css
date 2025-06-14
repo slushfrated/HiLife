@@ -3,18 +3,20 @@
 @tailwind utilities;
 
 .btn-green {
-    background: #5C6E58 !important;
-    color: #fff !important;
-    border: none !important;
+    background: #cad7c3 !important;
+    color: #black !important;
+    border: 2px solid #fff!important;
     border-radius: 0.5rem !important;
     padding: 0.75rem 0 !important;
     font-size: 1.1rem !important;
+    /* font-color: #black !important; */
     cursor: pointer !important;
-    box-shadow: 2px 2px 4px #6e5445 !important;
+    box-shadow: 2px 2px 4px #000 !important;
     transition: background 0.2s !important;
+    width: 250px !important;
 }
 .btn-green:hover, .btn-green:focus {
-    background: #4a5947 !important;
+    background: #white !important;
 }
 
 input[type="text"], input[type="email"], input[type="password"], textarea {
@@ -39,5 +41,24 @@ body[data-theme="night-owl"] input::placeholder,
 body[data-theme="night-owl"] textarea::placeholder {
   color: #c0caf5 !important;
   opacity: 1 !important;
+}
+
+/* Responsive styles for smaller screens */
+@media (max-width: 600px) {
+  .btn-green {
+    width: 100% !important;
+    font-size: 1rem !important;
+    padding: 0.6rem 0 !important;
+  }
+  input[type="text"], input[type="email"], input[type="password"], textarea {
+    font-size: 1rem !important;
+    padding: 0.6rem !important;
+  }
+  h1, h2, h3, h4, h5, h6 {
+    font-size: 1.2rem !important;
+  }
+  .auth-content, .auth-bg, .auth-header {
+    padding: 1rem !important;
+  }
 }
 

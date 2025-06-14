@@ -17,7 +17,7 @@
         <!-- Styles -->
 
     </head>
-    <body style="background: #8B6842; color: #fff; min-height: 100vh; margin: 0; font-family: 'Segoe UI', sans-serif;">
+    <body style="background: #6e5445; color: #fff; min-height: 100vh; margin: 0; font-family: 'Segoe UI', sans-serif;">
         @yield('content')
         @stack('scripts')
     </body>

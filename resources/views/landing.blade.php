@@ -17,7 +17,7 @@
                 <div style="font-size:2.5rem; margin-bottom:1.2rem;">☀️</div>
                 <div style="color:#fff; font-size:1.25rem; margin-bottom:1.5rem;">Welcome to HiLife! Let's get you started!</div>
                 <a href="{{ route('login') }}" style="width:100%; text-align:center; display:block;">
-                    <button class="btn-green" style="width:320px; font-size:1.5rem; box-shadow:2px 2px 4px #6e5445; margin-bottom:1.2rem;">Log In</button>
+                    <button class="btn-green" style="width:320px; font-size:1.5rem; box-shadow:2px 2px 4px #6e5445; margin-bottom:1.2rem; color:#000;">Log In</button>
                 </a>
                 <div style="color:#fff; font-size:1rem;">
                     Don't have an account? <a href="{{ route('register') }}" style="color:#b3b3ff; text-decoration:underline;">Sign Up now!</a>
