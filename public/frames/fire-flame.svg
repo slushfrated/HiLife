@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="120" height="120" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <radialGradient id="fireGradient" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#FFF8DC"/>
+      <stop offset="60%" stop-color="#FFA726"/>
+      <stop offset="100%" stop-color="#FF4500"/>
+    </radialGradient>
+    <linearGradient id="flame1" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#FFD700"/>
+      <stop offset="100%" stop-color="#FF4500"/>
+    </linearGradient>
+  </defs>
+  <!-- Outer ring -->
+  <circle cx="60" cy="70" r="50" stroke="#FF4500" stroke-width="6" fill="none"/>
+  <!-- Main flame body (yellow/orange, behind) -->
+  <path d="M15,70
+    Q30,30 60,35
+    Q90,30 105,70
+    Q100,60 90,65
+    Q105,50 85,60
+    Q105,40 75,55
+    Q95,20 60,35
+    Q25,20 45,55
+    Q15,40 35,60
+    Q5,50 30,65
+    Q0,60 15,70
+    Z"
+    fill="#FFA726" opacity="0.7"/>
+  <!-- Foreground flames (red/orange, in front) -->
+  <path d="M25,70
+    Q40,40 60,45
+    Q80,40 95,70
+    Q90,65 80,67
+    Q95,55 75,62
+    Q95,45 70,57
+    Q85,30 60,45
+    Q35,30 50,57
+    Q25,45 45,62
+    Q15,55 40,67
+    Q10,65 25,70
+    Z"
+    fill="#FF4500" opacity="0.85"/>
+</svg> 

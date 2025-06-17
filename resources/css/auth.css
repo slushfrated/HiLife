@@ -2,13 +2,15 @@ body, html {
     height: 100%;
     margin: 0;
     font-family: 'Segoe UI', sans-serif;
-    background: #8B6842;
-    color: #fff;
+    background: var(--background, #8B6842);
+    color: var(--text, #fff);
 }
 .auth-bg {
     min-height: 100vh;
     display: flex;
     flex-direction: column;
+    background: var(--background, #8B6842);
+    color: var(--text, #fff);
 }
 .auth-header {
     display: flex;
@@ -17,7 +19,7 @@ body, html {
     padding: 2rem;
 }
 .date-box {
-    background: #4B3A2F;
+    background: var(--primary, #4B3A2F);
     padding: 0.5rem 1.5rem;
     border-radius: 0.5rem;
     font-size: 1rem;
@@ -66,31 +68,36 @@ input[type="text"], input[type="password"] {
     border-radius: 0.5rem;
     border: none;
     font-size: 1rem;
-    color: #333;
+    color: var(--input-text, #333);
+    background: var(--input-bg, #fff);
 }
 .btn-green {
-    background: #5C6E58 !important;
-    color: #fff !important;
+    background: var(--btn-green-bg, #5C6E58) !important;
+    color: var(--btn-green-text, #fff) !important;
     border: none !important;
     border-radius: 0.5rem !important;
     padding: 0.75rem 0 !important;
     font-size: 1.1rem !important;
     cursor: pointer !important;
-    box-shadow: 2px 2px 4px #6e5445 !important;
+    box-shadow: 2px 2px 4px var(--btn-green-shadow, #6e5445) !important;
     transition: background 0.2s !important;
 }
 .btn-green:hover, .btn-green:focus {
-    background: #4a5947 !important;
+    background: var(--btn-green-hover, #4a5947) !important;
 }
 .test-green {
-    background: #5C6E58 !important;
-    color: #fff !important;
+    background: var(--btn-green-bg, #5C6E58) !important;
+    color: var(--btn-green-text, #fff) !important;
 }
 .switch-link {
     margin-top: 0.5rem;
     font-size: 0.95rem;
 }
 .switch-link a {
-    color: #fff;
+    color: var(--link, #fff);
     text-decoration: underline;
+}
+.floating-speaker {
+    background: var(--fab-bg, #6ec1e4);
+    box-shadow: 2px 2px 8px var(--fab-shadow, #6e5445);
 }

@@ -29,21 +29,43 @@ class TaskController extends Controller
      */
     public function store(Request $request)
     {
-        $validated = $request->validate([
+        $request->validate([
             'title' => 'required|string|max:255',
             'description' => 'nullable|string',
-            'deadline' => 'nullable|date',
-            'priority' => 'required|in:low,medium,high',
+            'due_date' => 'nullable|date',
+            'due_time' => 'nullable|date_format:H:i',
+            'duration_hours' => 'nullable|integer|min:0',
+            'duration_minutes' => 'nullable|integer|min:0|max:59'
         ]);
-        // Set EXP based on priority
-        $priorityExp = [
-            'low' => 20,
-            'medium' => 50,
-            'high' => 75
-        ];
-        $validated['exp'] = $priorityExp[$validated['priority']] ?? 50;
-        $task = Auth::user()->tasks()->create($validated);
-        return redirect()->route('dashboard')->with('success', 'Task created!');
+
+        $duration = null;
+        if ($request->filled('duration_hours') || $request->filled('duration_minutes')) {
+            $duration = ($request->duration_hours ?? 0) * 60 + ($request->duration_minutes ?? 0);
+        }
+
+        $task = Task::create([
+            'user_id' => auth()->id(),
+            'title' => $request->title,
+            'description' => $request->description,
+            'due_date' => $request->due_date,
+            'due_time' => $request->due_time,
+            'duration_minutes' => $duration,
+            'priority' => $request->priority,
+            'source' => 'user'
+        ]);
+
+        // Update achievements after adding a quest
+        $user = auth()->user();
+        $achievement = $user->checkAndUnlockAchievements();
+        if ($achievement) {
+            session(['achievement_unlocked' => [
+                'name' => $achievement->name,
+                'description' => $achievement->description,
+                'icon' => $achievement->icon
+            ]]);
+        }
+
+        return redirect()->back()->with('success', 'Quest created successfully!');
     }
 
     /**
@@ -69,59 +91,62 @@ class TaskController extends Controller
      */
     public function update(Request $request, Task $task)
     {
-        \Log::info('Update method hit');
-        \Log::info('Before validation', $request->all());
         $this->authorizeTask($task);
-        // Only validate fields that are present
-        $rules = [];
-        if ($request->has('title')) {
-            $rules['title'] = 'required|string|max:255';
-        }
-        if ($request->has('description')) {
-            $rules['description'] = 'nullable|string';
-        }
+
+        // Handle quest completion
         if ($request->has('is_completed')) {
-            $rules['is_completed'] = 'sometimes|boolean';
-        }
-        $validated = $request->validate($rules);
-        \Log::info('Validated:', $validated);
-        \Log::info('Task before:', $task->toArray());
-        if (isset($validated['is_completed']) && $validated['is_completed'] && !$task->is_completed) {
-            if ($task->source === 'system') {
-                $taskId = $task->id;
-                $taskTitle = $task->title;
-                $user = Auth::user();
-                $user->checkAndUnlockAchievements();
-                $task->delete();
-                session()->flash('just_completed_system_task_id', $taskId);
-                session()->flash('just_completed_system_task_title', $taskTitle);
-                return redirect()->route('quests')->with('success', 'System quest completed!');
-            } else {
-                $validated['completed_at'] = now();
+            if (!$task->is_completed) {
                 $task->is_completed = true;
+                $task->completed_at = now();
                 $task->save();
                 // Add EXP for completing a task
                 $user = Auth::user();
-                $isOverdue = $task->deadline && now('Asia/Jakarta')->gt(\Carbon\Carbon::parse($task->deadline, 'Asia/Jakarta'));
-                $expAmount = $isOverdue ? 20 : 50;
-                $user->addExp($expAmount); // Reduced EXP for overdue
-                $user->refresh(); // Refresh user data
-                $user->checkAndUnlockAchievements();
+                $user->addExp(50); // 50 EXP per completed task
+                $user->refresh();
+                $this->updateUserStreak($user);
+                $achievement = $user->checkAndUnlockAchievements();
+                if ($achievement) {
+                    session(['achievement_unlocked' => [
+                        'name' => $achievement->name,
+                        'description' => $achievement->description,
+                        'icon' => $achievement->icon
+                    ]]);
+                }
+                session()->flash('just_completed_task', true);
+                session()->flash('just_completed_task_id', $task->id);
             }
+            $redirect = $request->input('redirect_to') === 'quests' ? route('quests') : route('dashboard');
+            return redirect($redirect)->with('quest_notification', ['message' => 'Quest completed!', 'color' => '#8fc97a']);
         }
-        $task->update($validated);
-        \Log::info('Task after:', $task->fresh()->toArray());
-        \Log::info('User EXP:', ['exp' => Auth::user()->exp, 'level' => Auth::user()->level]);
-        if ($request->is_completed) {
-            session()->flash('just_completed_task', true);
-            session()->flash('just_completed_task_id', $task->id);
+
+        $rules = [
+            'title' => 'required|string|max:255',
+            'description' => 'nullable|string',
+            'due_date' => 'nullable|date',
+            'due_time' => 'nullable|date_format:H:i',
+            'duration_hours' => 'nullable|integer|min:0',
+            'duration_minutes' => 'nullable|integer|min:0|max:59',
+            'priority' => 'required|in:low,medium,high'
+        ];
+
+        $validated = $request->validate($rules);
+
+        $duration = null;
+        if ($request->filled('duration_hours') || $request->filled('duration_minutes')) {
+            $duration = ($request->duration_hours ?? 0) * 60 + ($request->duration_minutes ?? 0);
         }
-        // Redirect to the correct page
-        $referer = $request->headers->get('referer');
-        if ($referer && str_contains($referer, '/quests')) {
-            return redirect()->route('quests')->with('success', 'Task updated!');
-        }
-        return redirect()->route('dashboard')->with('success', 'Task updated!');
+
+        $task->update([
+            'title' => $validated['title'],
+            'description' => $validated['description'] ?? null,
+            'due_date' => $validated['due_date'],
+            'due_time' => $validated['due_time'] ?? null,
+            'duration_minutes' => $duration,
+            'priority' => $validated['priority'],
+        ]);
+
+        $redirect = $request->input('redirect_to') === 'quests' ? route('quests') : route('dashboard');
+        return redirect($redirect)->with('quest_notification', ['message' => 'Task updated!', 'color' => '#7aa2f7']);
     }
 
     /**
@@ -131,7 +156,11 @@ class TaskController extends Controller
     {
         $this->authorizeTask($task);
         $task->delete();
-        return redirect()->route('quests')->with('success', 'Task deleted!');
+        if (request()->expectsJson()) {
+            return response()->json(['success' => true]);
+        }
+        $redirect = request('redirect_to') === 'quests' ? route('quests') : route('dashboard');
+        return redirect($redirect)->with('quest_notification', ['message' => 'Quest deleted!', 'color' => '#e74c3c']);
     }
 
     /**
@@ -148,7 +177,8 @@ class TaskController extends Controller
     {
         $activeTasks = Auth::user()->tasks()
             ->where('is_completed', false)
-            ->latest()
+            ->orderBy('due_date')
+            ->orderBy('due_time')
             ->get();
         $completedTasks = Auth::user()->tasks()
             ->where('is_completed', true)
@@ -168,10 +198,40 @@ class TaskController extends Controller
             $user = Auth::user();
             $user->addExp(50); // 50 EXP per completed task
             $user->refresh();
-            $user->checkAndUnlockAchievements();
+            $this->updateUserStreak($user);
+            $achievement = $user->checkAndUnlockAchievements();
+            if ($achievement) {
+                session(['achievement_unlocked' => [
+                    'name' => $achievement->name,
+                    'description' => $achievement->description,
+                    'icon' => $achievement->icon
+                ]]);
+            }
             session()->flash('just_completed_task', true);
             session()->flash('just_completed_task_id', $task->id);
         }
-        return redirect()->route('quests')->with('success', 'Task completed!');
+        return redirect()->route('dashboard')->with('quest_notification', ['message' => 'Quest completed!', 'color' => '#8fc97a']);
+    }
+
+    /**
+     * Update user's streak.
+     */
+    private function updateUserStreak($user)
+    {
+        $today = now()->toDateString();
+        $yesterday = now()->subDay()->toDateString();
+        if ($user->last_streak_date === $today) {
+            return;
+        }
+        if ($user->last_streak_date === $yesterday) {
+            $user->current_streak += 1;
+        } else {
+            $user->current_streak = 1;
+        }
+        $user->last_streak_date = $today;
+        if ($user->current_streak > $user->longest_streak) {
+            $user->longest_streak = $user->current_streak;
+        }
+        $user->save();
     }
 }

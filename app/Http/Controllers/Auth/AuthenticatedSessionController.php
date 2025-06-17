@@ -27,7 +27,12 @@ class AuthenticatedSessionController extends Controller
     {
         $request->authenticate();
 
+        // Clear any stale session data
         $request->session()->regenerate();
+
+        // Eager load the theme relationship
+        $user = Auth::user();
+        $user->load('theme');
 
         return redirect()->intended(RouteServiceProvider::HOME);
     }

@@ -14,10 +14,10 @@ class AchievementSeeder extends Seeder
     public function run(): void
     {
         Achievement::firstOrCreate([
-            'name' => 'First Quest Complete',
+            'name' => 'Rookie',
         ], [
             'description' => 'Complete your first quest.',
-            'icon' => 'first-quest.png',
+            'icon' => 'checkmark',
             'type' => 'quests',
             'target' => 1
         ]);
@@ -25,23 +25,23 @@ class AchievementSeeder extends Seeder
             'name' => 'Quest Novice',
         ], [
             'description' => 'Complete 10 quests.',
-            'icon' => 'quest-novice.png',
+            'icon' => 'bronze-medal',
             'type' => 'quests',
             'target' => 10
         ]);
         Achievement::firstOrCreate([
             'name' => 'Quest Master',
         ], [
-            'description' => 'Complete 100 quests.',
-            'icon' => 'quest-master.png',
+            'description' => 'Complete 25 quests.',
+            'icon' => 'trophy',
             'type' => 'quests',
-            'target' => 100
+            'target' => 25
         ]);
         Achievement::firstOrCreate([
-            'name' => 'Level Up!',
+            'name' => 'Rising Star',
         ], [
             'description' => 'Reach level 2.',
-            'icon' => 'level-up.png',
+            'icon' => 'arrow-up',
             'type' => 'level',
             'target' => 2
         ]);
@@ -49,15 +49,15 @@ class AchievementSeeder extends Seeder
             'name' => 'Veteran',
         ], [
             'description' => 'Reach level 10.',
-            'icon' => 'veteran.png',
+            'icon' => 'shield',
             'type' => 'level',
             'target' => 10
         ]);
         Achievement::firstOrCreate([
-            'name' => '7-Day Streak',
+            'name' => 'Streak Keeper',
         ], [
             'description' => 'Maintain a streak for 7 days in a row.',
-            'icon' => 'fire.png',
+            'icon' => 'fire',
             'type' => 'streak',
             'target' => 7
         ]);

@@ -16,7 +16,7 @@ class NameDecisionController extends Controller
     public function store(Request $request): RedirectResponse
     {
         $request->validate([
-            'name' => ['required', 'string', 'max:255'],
+            'name' => ['required', 'string', 'max:255', 'unique:users,name'],
         ]);
 
         $user = Auth::user();

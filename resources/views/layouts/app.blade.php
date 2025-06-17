@@ -10,12 +10,15 @@
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.bunny.net">
         <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
 
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
     <body class="font-sans antialiased"
-        style="background: var(--background, #8B6842); color: var(--text, #fff); min-height: 100vh; margin: 0; font-family: 'Segoe UI', sans-serif;">
+        style="background: var(--background, #8B6842); color: var(--text, #fff); min-height: 100vh; margin: 0; font-family: 'Inter', sans-serif;">
         @php
             $theme = Auth::user() && Auth::user()->theme ? Auth::user()->theme : (object)[
                 'primary_color' => '#b8860b',
@@ -132,7 +135,7 @@
                     --tab-active-text: #654D48;
                     --tab-inactive-bg: #d2c1ad;
                     --tab-inactive-text: #654D48;
-                    --quest-card-bg: #e7d6b8;
+                    --quest-card-bg: #DFEDD7;
                     --quest-card-text: #654D48;
                     --quest-badge-bg: #ffe066;
                     --quest-badge-text: #fff;
@@ -167,14 +170,16 @@
                 @endif
             }
         </style>
-        <div class="min-h-screen" style="background: var(--background); color: var(--text); min-height: 100vh; font-family: 'Segoe UI', sans-serif;">
+        <div class="min-h-screen" style="background: var(--background); color: var(--text); min-height: 100vh; font-family: 'Inter', sans-serif;">
             <!-- Fixed Navbar/Header -->
             <div id="main-navbar" style="position:fixed; top:0; left:0; width:100vw; background:var(--topbar-bg, var(--primary)); padding:1rem 2.5rem; display:flex; align-items:center; justify-content:space-between; z-index:5000; box-sizing: border-box; box-shadow:0 2px 8px #6e544580; color:#fff;">
                 <div style="flex:1; display:flex; align-items:center;">
                     <span id="sidebar-toggle" style="margin-right:1.2rem; font-size:1.8rem; cursor: pointer; color:#fff;">☰</span>
-                    <span id="greeting-text" style="font-size:1.4rem; font-family:serif; color:#fff; letter-spacing:0.02em;">Good morning, {{ Auth::user()->name ?? 'Grindmaster' }}!</span>
+                    <span id="greeting-text" style="font-size:1.4rem; font-family:'Inter',sans-serif; color:#fff; letter-spacing:0.02em;">Good morning, {{ Auth::user()->name ?? 'Grindmaster' }}!</span>
                     <span style="display:flex; align-items:center; gap:0.7rem; margin-left:2.2rem; background:rgba(0,0,0,0.10); border-radius:0.7rem; padding:0.3rem 1.1rem; font-size:1.1rem; font-family:'Segoe UI',sans-serif; font-weight:bold; color:#fff; box-shadow:0 2px 8px #0002;">
-                        <span style="font-size:1.4rem; margin-right:0.5rem;">🔥</span>
+                        <span style="font-size:1.4rem; margin-right:0.5rem; display:flex; align-items:center; justify-content:center;">
+                            <svg width='24' height='24' viewBox='0 0 32 32' fill='none' style='display:block;'><path d='M16 3C16 3 13 8 13 12C13 15 16 17 16 17C16 17 19 15 19 12C19 8 16 3 16 3Z' fill='#FFA726'/><path d='M16 29C21.5228 29 26 24.5228 26 19C26 13.4772 19 7 16 3C13 7 6 13.4772 6 19C6 24.5228 10.4772 29 16 29Z' fill='#FF7043'/><path d='M16 25C18.2091 25 20 23.2091 20 21C20 19.3431 16 15 16 15C16 15 12 19.3431 12 21C12 23.2091 13.7909 25 16 25Z' fill='#FFD54F'/></svg>
+                        </span>
                         Streak: <span style="margin:0 0.5rem; color:var(--exp-bar, #DD7A7A); font-size:1.2rem;">{{ Auth::user()->current_streak ?? 0 }}</span>
                         <span style="font-size:1rem; color:#fff; margin-left:1.1rem;">Longest: <span style="color:var(--exp-bar, #DD7A7A); font-size:1.1rem;">{{ Auth::user()->longest_streak ?? 0 }}</span></span>
                     </span>
@@ -191,7 +196,7 @@
                     </div>
                 </div>
                 <div style="flex:1; display:flex; align-items:center; justify-content:flex-end;">
-                    <span id="clock-top-right" style="font-size:1.6rem; font-family:monospace; color:#fff; font-weight: bold; border-radius:0.7rem; padding:0.3rem 1.2rem;">12:00 pm</span>
+                    <span id="clock-top-right" style="font-size:1.6rem; font-family:'Inter',sans-serif; color:#fff; font-weight: bold; border-radius:0.7rem; padding:0.3rem 1.2rem;">12:00 pm</span>
                 </div>
             </div>
 
@@ -205,27 +210,38 @@
                     </div>
                     <div style="display:flex; flex-direction:column; gap:1.2rem;">
                         <a href="{{ route('dashboard') }}" style="display:flex; align-items:center; gap:1.1rem; background:var(--secondary); color:var(--sidebar-text, var(--primary)); font-size:1.25rem; font-weight:bold; border-radius:0.7rem; padding:1.1rem 1.2rem; text-decoration:none; box-shadow:0 2px 8px #2d1c1c33;">
-                            <span style="font-size:2rem; display:flex; align-items:center; color:var(--sidebar-icon, var(--sidebar-text, var(--primary)));">🏠</span>
+                            <span style="font-size:2rem; display:flex; align-items:center; color:var(--sidebar-icon, var(--sidebar-text, var(--primary)));">
+                                <!-- Home/House -->
+                                <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M3 12L12 3l9 9"/><path d="M9 21V9h6v12"/></svg>
+                            </span>
                             Home
                         </a>
                         <a href="{{ route('profile.edit') }}" style="display:flex; align-items:center; gap:1.1rem; background:var(--secondary); color:var(--sidebar-text, var(--primary)); font-size:1.25rem; font-weight:bold; border-radius:0.7rem; padding:1.1rem 1.2rem; text-decoration:none; box-shadow:0 2px 8px #2d1c1c33;">
-                            <span style="font-size:2rem; display:flex; align-items:center; color:var(--sidebar-icon, var(--sidebar-text, var(--primary)));">👤</span>
+                            <span style="font-size:2rem; display:flex; align-items:center; color:var(--sidebar-icon, var(--sidebar-text, var(--primary)));">
+                                <!-- User/Profile -->
+                                <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 8-4 8-4s8 0 8 4"/></svg>
+                            </span>
                             Profile
                         </a>
                         <a href="{{ route('tasks.index') }}" style="display:flex; align-items:center; gap:1.1rem; background:var(--secondary); color:var(--sidebar-text, var(--primary)); font-size:1.25rem; font-weight:bold; border-radius:0.7rem; padding:1.1rem 1.2rem; text-decoration:none; box-shadow:0 2px 8px #2d1c1c33;">
-                            <span style="font-size:2rem; display:flex; align-items:center; color:var(--sidebar-icon, var(--sidebar-text, var(--primary)));">📝</span>
+                            <span style="font-size:2rem; display:flex; align-items:center; color:var(--sidebar-icon, var(--sidebar-text, var(--primary)));">
+                                <!-- Quests/Checklist -->
+                                <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M9 9h6M9 13h6M9 17h2"/></svg>
+                            </span>
                             Quests
                         </a>
-                        <a href="{{ route('calendar') }}" style="display:flex; align-items:center; gap:1.1rem; background:var(--secondary); color:var(--sidebar-text, var(--primary)); font-size:1.25rem; font-weight:bold; border-radius:0.7rem; padding:1.1rem 1.2rem; text-decoration:none; box-shadow:0 2px 8px #2d1c1c33;">
-                            <span style="font-size:2rem; display:flex; align-items:center; color:var(--sidebar-icon, var(--sidebar-text, var(--primary)));">📅</span>
-                            Calendar
-                        </a>
                         <a href="{{ route('leaderboard') }}" style="display:flex; align-items:center; gap:1.1rem; background:var(--secondary); color:var(--sidebar-text, var(--primary)); font-size:1.25rem; font-weight:bold; border-radius:0.7rem; padding:1.1rem 1.2rem; text-decoration:none; box-shadow:0 2px 8px #2d1c1c33;">
-                            <span style="font-size:2rem; display:flex; align-items:center; color:var(--sidebar-icon, var(--sidebar-text, var(--primary)));">🏆</span>
+                            <span style="font-size:2rem; display:flex; align-items:center; color:var(--sidebar-icon, var(--sidebar-text, var(--primary)));">
+                                <!-- Leaderboard/Podium -->
+                                <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><rect x="9" y="8" width="6" height="12"/><rect x="3" y="14" width="6" height="6"/><rect x="15" y="12" width="6" height="8"/></svg>
+                            </span>
                             Leaderboard
                         </a>
-                        <a href="{{ route('achievements') }}" style="display:flex; align-items:center; gap:1.1rem; background:var(--secondary); color:var(--sidebar-text, var(--primary)); font-size:1.25rem; font-weight:bold; border-radius:0.7rem; padding:1.1rem 1.2rem; text-decoration:none; box-shadow:0 2px 8px #2d1c1c33;">
-                            <span style="font-size:2rem; display:flex; align-items:center; color:var(--sidebar-icon, var(--sidebar-text, var(--primary)));">🎖️</span>
+                        <a href="{{ route('achievements.index') }}" style="display:flex; align-items:center; gap:1.1rem; background:var(--secondary); color:var(--sidebar-text, var(--primary)); font-size:1.25rem; font-weight:bold; border-radius:0.7rem; padding:1.1rem 1.2rem; text-decoration:none; box-shadow:0 2px 8px #2d1c1c33;">
+                            <span style="font-size:2rem; display:flex; align-items:center; color:var(--sidebar-icon, var(--sidebar-text, var(--primary)));">
+                                <!-- Medal/Achievements -->
+                                <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><circle cx="12" cy="8" r="7"/><path d="M8.21 13.89l-2.39 4.14a1 1 0 0 0 1.37 1.37l4.14-2.39M15.79 13.89l2.39 4.14a1 1 0 0 1-1.37 1.37l-4.14-2.39"/></svg>
+                            </span>
                             Achievements
                         </a>
                     </div>
@@ -234,7 +250,10 @@
                     <form method="POST" action="{{ route('logout') }}">
                         @csrf
                         <button id="sidebar-logout-btn" type="submit" style="display:flex; align-items:center; gap:1.1rem; background:var(--secondary); color:var(--sidebar-text, var(--primary)); font-size:1.25rem; font-weight:bold; border-radius:0.7rem; padding:1.1rem 1.2rem; text-decoration:none; box-shadow:0 2px 8px #2d1c1c33; border:none; outline:none; cursor:pointer; opacity:0.7; width:100%; margin-top:0.7rem;">
-                            <span style="font-size:2rem; display:flex; align-items:center; color:var(--sidebar-icon, var(--sidebar-text, var(--primary)));">↩️</span>
+                            <span style="font-size:2rem; display:flex; align-items:center; color:var(--sidebar-icon, var(--sidebar-text, var(--primary)));">
+                                <!-- Logout/Arrow -->
+                                <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+                            </span>
                             <span>Logout</span>
                         </button>
                     </form>
@@ -253,32 +272,99 @@
             <div style="background:var(--modal-bg); color:var(--modal-text, #222); border-radius:1.5rem; box-shadow:0 6px 32px #0008; padding:2.2rem 2.2rem 2.2rem 2.2rem; min-width:370px; max-width:95vw; position:relative; display:flex; flex-direction:column; align-items:center;">
                 <!-- Header Bar -->
                 <div style="width:100%; display:flex; align-items:center; justify-content:space-between; margin-bottom:2rem;">
-                    <div style="background:var(--modal-header-bg); color:var(--modal-header-text, #fff); font-size:1.35rem; font-weight:bold; border-radius:0.7rem; padding:0.3rem 1.2rem; display:flex; align-items:center; gap:0.7rem; box-shadow:0 2px 8px #0002;">
-                        <span style="font-size:1.7rem; font-weight:bold;">+</span> Create New Quest
+                    <div style="font-size:1.65rem; font-weight:bold; color:var(--modal-header-bg); padding:0; background:none; box-shadow:none; border-radius:0;">
+                        Create New Quest
                     </div>
                     <button id="close-add-quest" style="background:none; border:none; font-size:2.1rem; color:var(--modal-header-bg); cursor:pointer; margin-left:1.2rem; border-radius:0.5rem; transition:background 0.2s; width:2.3rem; height:2.3rem; display:flex; align-items:center; justify-content:center;" onmouseover="this.style.background='var(--highlight-bg)'" onmouseout="this.style.background='none'">&times;</button>
                 </div>
-                <form method="POST" action="{{ route('tasks.store') }}" style="width:100%; display:flex; flex-direction:column; gap:1.2rem;">
+                <form method="POST" action="{{ route('tasks.store') }}" style="width:100%; display:flex; flex-direction:row; gap:2.2rem; min-width:350px; max-width:600px;">
                     @csrf
+                    <!-- Left Side: Title & Description -->
+                    <div style="flex:1; display:flex; flex-direction:column; gap:1.2rem;">
                     <label for="quest-title" style="font-weight:600; margin-bottom:0.2rem; color:var(--modal-text, #222);">Quest Title</label>
-                    <input id="quest-title" type="text" name="title" required style="font-size:1.1rem; padding:0.7rem 1.2rem; border-radius:0.7rem; border:none; background:var(--container-bg, #fff); color:var(--modal-text, #222); margin-bottom:0.7rem;">
-                    <label for="quest-desc" style="font-weight:600; margin-bottom:0.2rem; color:var(--modal-text, #222);">Quest Description (Optional)</label>
-                    <textarea id="quest-desc" name="description" style="font-size:1.05rem; padding:0.7rem 1.2rem; border-radius:0.7rem; border:none; background:var(--container-bg, #fff); color:var(--modal-text, #222); min-height:80px;"></textarea>
-                    <label for="quest-deadline" style="font-weight:600; margin-bottom:0.2rem; color:var(--modal-text, #222);">Quest Deadline</label>
-                    <input id="quest-deadline" type="datetime-local" name="deadline" style="font-size:1.05rem; padding:0.7rem 1.2rem; border-radius:0.7rem; border:none; background:var(--container-bg, #fff); color:var(--modal-text, #222);">
+                        <input id="quest-title" type="text" name="title" required placeholder="Enter quest title..." style="font-size:1.1rem; padding:0.7rem 1.2rem; border-radius:0.7rem; border:none; background:var(--container-bg, #fff); color:var(--modal-text, #222); margin-bottom:0.7rem;">
+                        <label for="quest-desc" style="font-weight:600; margin-bottom:0.2rem; color:var(--modal-text, #222);">Quest Description <span style="color:#888; font-size:0.95em; font-weight:normal;">(Optional)</span></label>
+                        <textarea id="quest-desc" name="description" placeholder="Describe your quest (optional)..." style="font-size:1.05rem; padding:0.7rem 1.2rem; border-radius:0.7rem; border:none; background:var(--container-bg, #fff); color:var(--modal-text, #222); min-height:80px;"></textarea>
+                    </div>
+                    <!-- Right Side: Date, Time, Duration, Priority -->
+                    <div style="flex:1; display:flex; flex-direction:column; gap:1.2rem;">
+                        <label for="quest-date" style="font-weight:600; margin-bottom:0.2rem; color:var(--modal-text, #222);">Date</label>
+                        <input id="quest-date" type="date" name="due_date" style="font-size:1.05rem; padding:0.7rem 1.2rem; border-radius:0.7rem; border:none; background:#fff; color:var(--modal-text, #222);" placeholder="dd/mm/yyyy">
+                        <div style="color:#888; font-size:0.97em; margin-top:0.2em; margin-bottom:0.7em;">Leave blank if you haven't decided when to do this quest.</div>
+                        <label for="quest-time" style="font-weight:600; margin-bottom:0.2rem; color:var(--modal-text, #222);">Time</label>
+                        <input id="quest-time" type="time" name="due_time" style="font-size:1.05rem; padding:0.7rem 1.2rem; border-radius:0.7rem; border:none; background:#fff; color:var(--modal-text, #222);" placeholder="--:--">
+                        <div style="color:#888; font-size:0.97em; margin-top:0.2em; margin-bottom:0.7em;">You can set a time later.</div>
+                        <label style="font-weight:600; margin-bottom:0.2rem; color:var(--modal-text, #222);">Duration <span style="color:#888; font-size:0.95em; font-weight:normal;">(Optional)</span></label>
+                        <div style="display:flex; gap:0.7rem; align-items:center;">
+                            <input type="number" name="duration_hours" min="0" max="23" placeholder="Hours (optional)" style="width:70px; font-size:1.05rem; padding:0.7rem 0.7rem; border-radius:0.7rem; border:none; background:#fff; color:var(--modal-text, #222);">
+                            <span style="font-size:1.1rem; color:var(--modal-text, #222);">:</span>
+                            <input type="number" name="duration_minutes" min="0" max="59" placeholder="Minutes (optional)" style="width:70px; font-size:1.05rem; padding:0.7rem 0.7rem; border-radius:0.7rem; border:none; background:#fff; color:var(--modal-text, #222);">
+                        </div>
                     <label for="quest-priority" style="font-weight:600; margin-bottom:0.2rem; color:var(--modal-text, #222);">Priority</label>
-                    <select id="quest-priority" name="priority" required style="font-size:1.05rem; padding:0.7rem 1.2rem; border-radius:0.7rem; border:none; background:var(--container-bg, #fff); color:var(--modal-text, #222);">
-                        <option value="low">Low</option>
-                        <option value="medium" selected>Medium</option>
-                        <option value="high">High</option>
+                        <div style="position:relative; width:100%;">
+                            <select id="quest-priority" name="priority" required style="font-size:1.05rem; padding:0.7rem 1.2rem; border-radius:0.7rem; border:none; background:#fff; color:var(--modal-text, #222); width:100%; appearance:none; -webkit-appearance:none; -moz-appearance:none;">
+                                <option value="low">🔵 Low</option>
+                                <option value="medium" selected>🟠 Medium</option>
+                                <option value="high">🔴 High</option>
+                            </select>
+                            <span style="position:absolute; right:1.2rem; top:50%; transform:translateY(-50%); pointer-events:none; font-size:1.1rem; color:#888;">▼</span>
+                        </div>
+                        <button type="submit" style="font-size:1.1rem; padding:0.9rem 2.2rem; width:100%; margin-top:0.7rem; background:#99C680 !important; color:var(--modal-btn-text, #fff); border-radius:0.7rem; border:none; font-weight:bold; box-shadow:2px 2px 8px #0002; cursor:pointer; transition:background 0.2s;">Create Quest</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <!-- Edit Quest Modal -->
+        <div id="edit-quest-modal" style="display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(0,0,0,0.25); z-index:6000; align-items:center; justify-content:center;">
+            <div style="background:var(--modal-bg); color:var(--modal-text, #222); border-radius:1.5rem; box-shadow:0 6px 32px #0008; padding:2.2rem 2.2rem 2.2rem 2.2rem; min-width:370px; max-width:95vw; position:relative; display:flex; flex-direction:column; align-items:center;">
+                <!-- Header Bar -->
+                <div style="width:100%; display:flex; align-items:center; justify-content:space-between; margin-bottom:2rem;">
+                    <div style="font-size:1.65rem; font-weight:bold; color:var(--modal-header-bg); padding:0; background:none; box-shadow:none; border-radius:0;">
+                        Edit Quest
+                    </div>
+                    <button id="close-edit-quest" style="background:none; border:none; font-size:2.1rem; color:var(--modal-header-bg); cursor:pointer; margin-left:1.2rem; border-radius:0.5rem; transition:background 0.2s; width:2.3rem; height:2.3rem; display:flex; align-items:center; justify-content:center;" onmouseover="this.style.background='var(--highlight-bg)'" onmouseout="this.style.background='none'">&times;</button>
+                </div>
+                <form id="edit-quest-form" method="POST" style="width:100%; display:flex; flex-direction:row; gap:2.2rem; min-width:350px; max-width:600px;">
+                    @csrf
+                    @method('PUT')
+                    <!-- Left Side: Title & Description -->
+                    <div style="flex:1; display:flex; flex-direction:column; gap:1.2rem;">
+                        <label for="edit-quest-title" style="font-weight:600; margin-bottom:0.2rem; color:var(--modal-text, #222);">Quest Title</label>
+                        <input id="edit-quest-title" type="text" name="title" required placeholder="Enter quest title..." style="font-size:1.1rem; padding:0.7rem 1.2rem; border-radius:0.7rem; border:none; background:var(--container-bg, #fff); color:var(--modal-text, #222); margin-bottom:0.7rem;">
+                        <label for="edit-quest-desc" style="font-weight:600; margin-bottom:0.2rem; color:var(--modal-text, #222);">Quest Description <span style="color:#888; font-size:0.95em; font-weight:normal;">(Optional)</span></label>
+                        <textarea id="edit-quest-desc" name="description" placeholder="Describe your quest (optional)..." style="font-size:1.05rem; padding:0.7rem 1.2rem; border-radius:0.7rem; border:none; background:var(--container-bg, #fff); color:var(--modal-text, #222); min-height:80px;"></textarea>
+                    </div>
+                    <!-- Right Side: Date, Time, Duration, Priority -->
+                    <div style="flex:1; display:flex; flex-direction:column; gap:1.2rem;">
+                        <label for="edit-quest-date" style="font-weight:600; margin-bottom:0.2rem; color:var(--modal-text, #222);">Date</label>
+                        <input id="edit-quest-date" type="date" name="due_date" style="font-size:1.05rem; padding:0.7rem 1.2rem; border-radius:0.7rem; border:none; background:#fff; color:var(--modal-text, #222);" placeholder="dd/mm/yyyy">
+                        <div style="color:#888; font-size:0.97em; margin-top:0.2em; margin-bottom:0.7em;">Leave blank if you haven't decided when to do this quest.</div>
+                        <label for="edit-quest-time" style="font-weight:600; margin-bottom:0.2rem; color:var(--modal-text, #222);">Time</label>
+                        <input id="edit-quest-time" type="time" name="due_time" style="font-size:1.05rem; padding:0.7rem 1.2rem; border-radius:0.7rem; border:none; background:#fff; color:var(--modal-text, #222);" placeholder="--:--">
+                        <div style="color:#888; font-size:0.97em; margin-top:0.2em; margin-bottom:0.7em;">You can set a time later.</div>
+                        <label style="font-weight:600; margin-bottom:0.2rem; color:var(--modal-text, #222);">Duration <span style="color:#888; font-size:0.95em; font-weight:normal;">(Optional)</span></label>
+                        <div style="display:flex; gap:0.7rem; align-items:center;">
+                            <input id="edit-duration-hours" type="number" name="duration_hours" min="0" max="23" placeholder="Hours (optional)" style="width:70px; font-size:1.05rem; padding:0.7rem 0.7rem; border-radius:0.7rem; border:none; background:#fff; color:var(--modal-text, #222);">
+                            <span style="font-size:1.1rem; color:var(--modal-text, #222);">:</span>
+                            <input id="edit-duration-minutes" type="number" name="duration_minutes" min="0" max="59" placeholder="Minutes (optional)" style="width:70px; font-size:1.05rem; padding:0.7rem 0.7rem; border-radius:0.7rem; border:none; background:#fff; color:var(--modal-text, #222);">
+                        </div>
+                        <label for="edit-quest-priority" style="font-weight:600; margin-bottom:0.2rem; color:var(--modal-text, #222);">Priority</label>
+                        <div style="position:relative; width:100%;">
+                            <select id="edit-quest-priority" name="priority" required style="font-size:1.05rem; padding:0.7rem 1.2rem; border-radius:0.7rem; border:none; background:#fff; color:var(--modal-text, #222); width:100%; appearance:none; -webkit-appearance:none; -moz-appearance:none;">
+                                <option value="low">🟢 Low</option>
+                                <option value="medium">🟠 Medium</option>
+                                <option value="high">🔴 High</option>
                     </select>
-                    <button type="submit" class="btn-green" style="font-size:1.1rem; padding:0.9rem 2.2rem; width:100%; margin-top:0.7rem; background:var(--modal-btn-bg); color:var(--modal-btn-text, #fff); border-radius:0.7rem; border:none; font-weight:bold; box-shadow:2px 2px 8px #0002; cursor:pointer; transition:background 0.2s;">Create Quest</button>
+                            <span style="position:absolute; right:1.2rem; top:50%; transform:translateY(-50%); pointer-events:none; font-size:1.1rem; color:#888;">▼</span>
+                        </div>
+                        <button type="submit" style="font-size:1.1rem; padding:0.9rem 2.2rem; width:100%; margin-top:0.7rem; background:#99C680 !important; color:var(--modal-btn-text, #fff); border-radius:0.7rem; border:none; font-weight:bold; box-shadow:2px 2px 8px #0002; cursor:pointer; transition:background 0.2s;">Save Changes</button>
+                    </div>
                 </form>
             </div>
         </div>
         @if(session('success'))
             <div id="toast-success"
-                 style="position:fixed; top:2rem; left:50%; transform:translateX(-50%); background:var(--primary); color:#fff; font-size:1.1rem; padding:0.8rem 2rem; border-radius:0.6rem; box-shadow:0 2px 8px #6e5445; z-index:9999; transition:opacity 0.5s;">
+                 style="position:fixed; top:2rem; left:50%; transform:translateX(-50%); background:#27ae60; color:#fff; font-size:1.18rem; font-weight:bold; padding:1.1rem 2.5rem; border-radius:0.8rem; box-shadow:0 4px 18px #0005; z-index:9999; transition:opacity 0.5s; letter-spacing:0.01em; text-align:center;">
                 {{ session('success') }}
             </div>
             <script>
@@ -361,6 +447,8 @@
                 if (hour >= 5 && hour < 12) greeting = 'Good morning';
                 else if (hour >= 12 && hour < 17) greeting = 'Good afternoon';
                 else greeting = 'Good evening';
+                // Capitalize first letter (in case of future localization or changes)
+                greeting = greeting.charAt(0).toUpperCase() + greeting.slice(1);
                 const name = @json(Auth::user()->name ?? 'Grindmaster');
                 document.getElementById('greeting-text').textContent = `${greeting}, ${name}!`;
             }
@@ -379,6 +467,61 @@
                     }
                 };
             }
+            // Edit Quest Modal logic
+            var editQuestModal = document.getElementById('edit-quest-modal');
+            var closeEditQuest = document.getElementById('close-edit-quest');
+            if (closeEditQuest && editQuestModal) {
+                closeEditQuest.onclick = function() {
+                    editQuestModal.style.display = 'none';
+                };
+                editQuestModal.onclick = function(e) {
+                    if (e.target === editQuestModal) {
+                        editQuestModal.style.display = 'none';
+                    }
+                };
+            }
+            // Listen for edit button clicks
+            document.querySelectorAll('.open-edit-quest-modal').forEach(function(btn) {
+                btn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    var quest = JSON.parse(this.getAttribute('data-quest'));
+                    // Populate modal fields
+                    document.getElementById('edit-quest-title').value = quest.title || '';
+                    document.getElementById('edit-quest-desc').value = quest.description || '';
+                    var dateInput = document.getElementById('edit-quest-date');
+                    if (quest.due_date) {
+                        // If already yyyy-mm-dd, use as is
+                        if (/^\d{4}-\d{2}-\d{2}$/.test(quest.due_date)) {
+                            dateInput.value = quest.due_date;
+                        } else {
+                            // fallback: try to parse and format
+                            let d = new Date(quest.due_date);
+                            if (!isNaN(d.getTime())) {
+                                dateInput.value = d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
+                            } else {
+                                dateInput.value = '';
+                            }
+                        }
+                    } else {
+                        dateInput.value = '';
+                    }
+                    var timeInput = document.getElementById('edit-quest-time');
+                    if (quest.due_time) {
+                        // Accepts HH:MM:SS or HH:MM
+                        let t = quest.due_time;
+                        if (t.length > 5) t = t.slice(0, 5);
+                        timeInput.value = t;
+                    } else {
+                        timeInput.value = '';
+                    }
+                    document.getElementById('edit-duration-hours').value = quest.duration_hours || '';
+                    document.getElementById('edit-duration-minutes').value = quest.duration_minutes || '';
+                    document.getElementById('edit-quest-priority').value = quest.priority || 'medium';
+                    // Set form action
+                    document.getElementById('edit-quest-form').action = '/tasks/' + quest.id;
+                    editQuestModal.style.display = 'flex';
+                });
+            });
         });
         </script>
     </body>

@@ -3,10 +3,7 @@
 @section('content')
 <div class="auth-bg">
     <div class="auth-header">
-        <div class="date-box">
-            {{ \Carbon\Carbon::now()->format('l, d F Y') }}
-            <span class="time-box" id="clock">00:00</span>
-        </div>
+        <!-- Date and time removed -->
     </div>
     <div class="auth-content">
         <div style="display:flex; align-items:center; width:100%; justify-content:center;">

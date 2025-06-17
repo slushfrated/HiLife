@@ -8,6 +8,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
+use App\Models\AvatarFrame;
+use App\Models\User;
 
 class ProfileController extends Controller
 {
@@ -16,8 +18,17 @@ class ProfileController extends Controller
      */
     public function edit(Request $request): View
     {
+        $user = $request->user();
+        $allThemes = \App\Models\Theme::all();
+        $unlockedThemes = $user->themes()->pluck('themes.id')->toArray();
+        $allFrames = AvatarFrame::all();
+        $unlockedFrames = $user->unlockedFrames()->pluck('avatar_frames.id')->toArray();
         return view('profile.edit', [
-            'user' => $request->user(),
+            'user' => $user,
+            'allThemes' => $allThemes,
+            'unlockedThemes' => $unlockedThemes,
+            'allFrames' => $allFrames,
+            'unlockedFrames' => $unlockedFrames,
         ]);
     }
 
@@ -36,6 +47,21 @@ class ProfileController extends Controller
             }
             $path = $request->file('profile_picture')->store('profile_pictures', 'public');
             $user->profile_picture = $path;
+        }
+
+        if ($request->has('avatar_frame')) {
+            $frameId = $request->input('avatar_frame');
+            // Only allow setting to unlocked or null
+            if ($frameId && in_array($frameId, $user->unlockedFrames()->pluck('avatar_frames.id')->toArray())) {
+                $user->avatar_frame = $frameId;
+            } else {
+                $user->avatar_frame = null;
+            }
+        }
+
+        // Save selected achievement title
+        if ($request->has('current_title_achievement_id')) {
+            $user->current_title_achievement_id = $request->input('current_title_achievement_id') ?: null;
         }
 
         if ($user->isDirty('email')) {
@@ -89,6 +115,9 @@ class ProfileController extends Controller
         $user->name = $request->name;
         $user->save();
 
+        // Re-authenticate to refresh session data
+        Auth::login($user);
+
         // Redirect to dashboard or home
         return redirect()->route('dashboard')->with('success', 'Name set successfully!');
     }
@@ -104,13 +133,20 @@ class ProfileController extends Controller
         return redirect()->back()->with('status', 'Theme updated!');
     }
 
-    public function show($id)
+    public function show(User $user)
     {
-        $user = \App\Models\User::findOrFail($id);
+        $achievements = $user->achievements()->whereNotNull('unlocked_at')->get();
         $completedQuests = $user->tasks()->where('is_completed', true)->count();
-        $achievements = $user->achievements;
-        $currentStreak = $user->current_streak ?? 0;
-        $longestStreak = $user->longest_streak ?? 0;
-        return view('profile.show', compact('user', 'completedQuests', 'achievements', 'currentStreak', 'longestStreak'));
+        $currentStreak = $user->current_streak;
+        $longestStreak = $user->longest_streak;
+        return view('profile.show', compact('user', 'achievements', 'completedQuests', 'currentStreak', 'longestStreak'));
+    }
+
+    public function updateTitle(Request $request)
+    {
+        $user = $request->user();
+        $user->current_title_achievement_id = $request->input('current_title_achievement_id') ?: null;
+        $user->save();
+        return redirect()->back()->with('status', 'Title updated!');
     }
 }

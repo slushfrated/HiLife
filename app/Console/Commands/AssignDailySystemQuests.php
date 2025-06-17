@@ -20,7 +20,7 @@ class AssignDailySystemQuests extends Command
             // Delete previous system quests for this user
             Task::where('user_id', $user->id)->where('source', 'system')->delete();
             // Pick 4 random system quests
-            $randomQuests = $systemQuests->random(min(4, $systemQuests->count()));
+            $randomQuests = $systemQuests->random(min(3, $systemQuests->count()));
             foreach ($randomQuests as $quest) {
                 Task::create([
                     'title' => $quest->title,
@@ -30,6 +30,6 @@ class AssignDailySystemQuests extends Command
                 ]);
             }
         }
-        $this->info('Assigned 4 random system quests to each user.');
+        $this->info('Assigned 3 random system quests to each user.');
     }
 } 

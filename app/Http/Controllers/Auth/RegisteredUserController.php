@@ -45,16 +45,17 @@ class RegisteredUserController extends Controller
         if ($classicTheme) {
             $user->current_theme_id = $classicTheme->id;
             $user->save();
+            $user->themes()->attach($classicTheme->id); // Ensure Classic is unlocked
         }
 
         \App\Models\Task::assignSystemQuestsToUser($user);
-
-        $user->checkAndUnlockAchievements();
 
         event(new Registered($user));
 
         Auth::login($user);
 
-        return redirect()->route('name.decision');
+        $user->checkAndUnlockAchievements();
+
+        return redirect()->route('set-name.form');
     }
 }

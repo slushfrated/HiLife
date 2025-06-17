@@ -3,43 +3,43 @@
 @tailwind utilities;
 
 .btn-green {
-    background: #cad7c3 !important;
-    color: #black !important;
-    border: 2px solid #fff!important;
+    background: var(--btn-green-bg, #cad7c3) !important;
+    color: var(--btn-green-text, #000) !important;
+    border: 2px solid var(--btn-green-border, #fff)!important;
     border-radius: 0.5rem !important;
     padding: 0.75rem 0 !important;
     font-size: 1.1rem !important;
     /* font-color: #black !important; */
     cursor: pointer !important;
-    box-shadow: 2px 2px 4px #000 !important;
+    box-shadow: 2px 2px 4px var(--btn-green-shadow, #000) !important;
     transition: background 0.2s !important;
     width: 250px !important;
 }
 .btn-green:hover, .btn-green:focus {
-    background: #white !important;
+    background: var(--btn-green-hover, #fff) !important;
 }
 
 input[type="text"], input[type="email"], input[type="password"], textarea {
-  color: #444 !important;
-  background: #fff !important;
+  color: var(--input-text, #444) !important;
+  background: var(--input-bg, #fff) !important;
 }
 
 body[data-theme="night-owl"] input[type="text"],
 body[data-theme="night-owl"] input[type="email"],
 body[data-theme="night-owl"] input[type="password"],
 body[data-theme="night-owl"] textarea {
-  color: #fff !important;
-  background: #23243a !important;
+  color: var(--input-text-night, #fff) !important;
+  background: var(--input-bg-night, #23243a) !important;
 }
 
 input::placeholder, textarea::placeholder {
-  color: #888 !important;
+  color: var(--placeholder, #888) !important;
   opacity: 1 !important;
 }
 
 body[data-theme="night-owl"] input::placeholder,
 body[data-theme="night-owl"] textarea::placeholder {
-  color: #c0caf5 !important;
+  color: var(--placeholder-night, #c0caf5) !important;
   opacity: 1 !important;
 }
 
