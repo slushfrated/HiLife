@@ -1,5 +1,4 @@
 <x-app-layout>
-<pre style="color: red; background: #fff;">@json($completedTasks)</pre>
 <div style="width:100vw; min-height:100vh; background:var(--background); color:var(--text); font-family:'Segoe UI',sans-serif; overflow-x: hidden;">
     <!-- Main container -->
     <div style="width:100%; max-width:1200px; margin:2.5rem auto; padding:0 2rem; box-sizing:border-box; background:var(--background); display:flex; flex-direction:row; align-items:flex-start; gap:2.5rem; overflow:visible;">
@@ -572,37 +571,29 @@
                                     @if($task->completed_at)
                                         <span style="display:inline-block; font-size:0.98rem; font-weight:bold; color:#fff; background:#8fc97a; border-radius:0.5rem; padding:0.18rem 0.7rem; font-family:'Inter',sans-serif;">Completed {{ date('M j, Y g:i A', strtotime($task->completed_at)) }}</span>
                                     @endif
-                                    @if($task->due_date)
-                                        <span style="display:inline-block; font-size:0.98rem; color:#aaa; background:#eee; border-radius:0.5rem; padding:0.18rem 0.7rem; font-family:'Inter',sans-serif;">
-                                            Due {{ \Carbon\Carbon::parse($task->due_date)->format('M d, Y') }}
-                                        </span>
-                                    @else
-                                        <span style="display:inline-block; font-size:0.98rem; color:#aaa; background:#eee; border-radius:0.5rem; padding:0.18rem 0.7rem; font-family:'Inter',sans-serif;">
-                                            No due date
-                                        </span>
-                                    @endif
                                 </div>
                             </div>
                             <div style="display:flex; align-items:center; gap:0.3rem;">
-                                <form method="POST" action="{{ route('tasks.destroy', $task) }}" style="display:inline;" class="quest-delete-form" data-title="{{ $task->title }}" data-desc="{{ $task->description }}">
-                                    @csrf
-                                    @method('DELETE')
-                                    <input type="hidden" name="redirect_to" value="quests">
-                                    <button type="submit" style="background:var(--quest-btn-delete, #e74c3c); color:#fff; border:none; border-radius:50%; width:36px; height:36px; font-size:1.25rem; display:flex; align-items:center; justify-content:center; cursor:pointer; padding:0;">
-                                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="5" y="8" width="10" height="7" rx="1.5" fill="white"/><rect x="8" y="5" width="4" height="2" rx="1" fill="white"/><rect x="3" y="8" width="14" height="1.5" fill="white"/></svg>
-                                    </button>
-                                </form>
+                                @php
+                                    $questData = [
+                                        "id" => $task->id,
+                                        "title" => $task->title,
+                                        "description" => $task->description,
+                                        "due_time" => $task->due_time,
+                                        "duration_hours" => $task->duration_minutes ? intdiv($task->duration_minutes, 60) : '',
+                                        "duration_minutes" => $task->duration_minutes ? $task->duration_minutes % 60 : '',
+                                        "priority" => $task->priority
+                                    ];
+                                @endphp
+                                <button class="readd-quest-btn" data-quest='@json($questData)' style="background:var(--quest-btn-complete, #8fc97a); color:#fff; border:none; border-radius:0.7rem; padding:0.5rem 1.2rem; font-size:1rem; font-weight:bold; cursor:pointer;">Re-add</button>
                             </div>
                         </div>
                     @endforeach
                 @endif
             </div>
-    TEST LOOP: {{ $task->title }}
+
 @endforeach
 </div>
-<div style="color: purple;">TEST OUTSIDE: Completed tasks count: {{ count($completedTasks) }}</div>
-<div style="color: purple;">TEST OUTSIDE: Session data: {{ json_encode(session()->all()) }}</div>
-<div style="color: purple;">TEST OUTSIDE: User ID: {{ Auth::id() }}</div>
             <script>
                 // Wait for both DOM and Alpine to be ready
                 window.addEventListener('alpine:init', function() {

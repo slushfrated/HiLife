@@ -1,6 +1,6 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+        <h2 class="font-semibold text-xl leading-tight" style="color:var(--header-text, var(--primary, #654D48)); font-family:var(--font-family, inherit);">
             {{ __('Profile') }}
         </h2>
     </x-slot>
@@ -18,7 +18,7 @@
                         @csrf
                         <div>
                             <label for="current_theme_id" class="block text-sm font-medium mb-2" style="color:var(--quest-card-text, #4b3a2f);">Theme</label>
-                            <select id="current_theme_id" name="current_theme_id" style="color:var(--text, #222); background:var(--input-bg, #fff);" class="block w-full mt-1 rounded-md shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
+                            <select id="current_theme_id" name="current_theme_id" style="color:var(--input-text, #222); background:var(--input-bg, #fff); font-family:var(--font-family,inherit);" class="block w-full mt-1 rounded-md shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
                                 @foreach($allThemes as $theme)
                                     <option value="{{ $theme->id }}"
                                         @if($user->current_theme_id == $theme->id) selected @endif
@@ -38,7 +38,7 @@
                         @csrf
                         <div>
                             <label for="current_title_achievement_id" class="block text-sm font-medium mb-2" style="color:var(--quest-card-text, #4b3a2f);">Title</label>
-                            <select id="current_title_achievement_id" name="current_title_achievement_id" style="color:var(--text, #222); background:var(--input-bg, #fff);" class="block w-full mt-1 rounded-md shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" autocomplete="off">
+                            <select id="current_title_achievement_id" name="current_title_achievement_id" style="color:var(--input-text, #222); background:var(--input-bg, #fff); font-family:var(--font-family,inherit);" class="block w-full mt-1 rounded-md shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" autocomplete="off">
                                 <option value="" @if(!$user->current_title_achievement_id) selected @endif>None</option>
                                 @foreach($user->achievements()->whereNotNull('unlocked_at')->get() as $achievement)
                                     <option value="{{ $achievement->id }}" @if($user->current_title_achievement_id == $achievement->id) selected @endif>{{ $achievement->name }}</option>

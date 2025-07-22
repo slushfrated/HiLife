@@ -1,8 +1,8 @@
 <section class="space-y-6">
     <header>
-        <h2 style="color:var(--text, var(--quest-card-text, #4b3a2f)); font-size:1.3rem; font-weight:bold;">Delete Account</h2>
+        <h2 style="color:var(--text, var(--quest-card-text, #4b3a2f)); font-size:1.3rem; font-weight:bold; font-family:var(--font-family,inherit);">Delete Account</h2>
 
-        <p style="color:var(--text, var(--quest-card-text, #4b3a2f)); opacity:0.85;">Once your account is deleted, all of its resources and data will be permanently deleted. Before deleting your account, please download any data or information that you wish to retain.</p>
+        <p style="color:var(--text, var(--quest-card-text, #4b3a2f)); opacity:0.85; font-family:var(--font-family,inherit);">Once your account is deleted, all of its resources and data will be permanently deleted. Before deleting your account, please download any data or information that you wish to retain.</p>
     </header>
 
     <x-danger-button

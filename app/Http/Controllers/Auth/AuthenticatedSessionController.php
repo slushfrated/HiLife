@@ -28,6 +28,7 @@ class AuthenticatedSessionController extends Controller
         $request->authenticate();
 
         // Clear any stale session data
+        session()->forget(['just_completed_task', 'just_completed_task_id']);
         $request->session()->regenerate();
 
         // Eager load the theme relationship

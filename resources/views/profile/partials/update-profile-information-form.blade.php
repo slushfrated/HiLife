@@ -1,8 +1,8 @@
 <section>
     <header>
-        <h2 style="color:var(--quest-card-text, #4b3a2f); font-size:1.5rem; font-weight:bold;">{{ __('Profile Information') }}</h2>
+        <h2 style="color:var(--quest-card-text, #4b3a2f); font-size:1.5rem; font-weight:bold; font-family:var(--font-family,inherit);">{{ __('Profile Information') }}</h2>
 
-        <p class="mt-1 text-sm" style="color:var(--text, var(--quest-card-text, #4b3a2f)); opacity:0.85;">
+        <p class="mt-1 text-sm" style="color:var(--text, var(--quest-card-text, #4b3a2f)); opacity:0.85; font-family:var(--font-family,inherit);">
             {{ __("Update your account's profile information and email address.") }}
         </p>
     </header>
@@ -31,13 +31,13 @@
         @method('patch')
 
         <div>
-            <x-input-label for="name" :value="__('Name')" style="color:var(--text, var(--quest-card-text, #4b3a2f)); font-weight:bold;" />
+            <x-input-label for="name" :value="__('Name')" style="color:var(--text, var(--quest-card-text, #4b3a2f)); font-weight:bold; font-family:var(--font-family,inherit);" />
             <x-text-input id="name" name="name" type="text" class="mt-1 block w-full" :value="old('name', $user->name)" required autofocus autocomplete="name" />
             <x-input-error class="mt-2" :messages="$errors->get('name')" />
         </div>
 
         <div>
-            <x-input-label for="email" :value="__('Email')" style="color:var(--text, var(--quest-card-text, #4b3a2f)); font-weight:bold;" />
+            <x-input-label for="email" :value="__('Email')" style="color:var(--text, var(--quest-card-text, #4b3a2f)); font-weight:bold; font-family:var(--font-family,inherit);" />
             <x-text-input id="email" name="email" type="email" class="mt-1 block w-full" :value="old('email', $user->email)" required autocomplete="username" />
             <x-input-error class="mt-2" :messages="$errors->get('email')" />
 
@@ -62,7 +62,7 @@
 
         <!-- Profile Picture Upload -->
         <div>
-            <x-input-label for="profile_picture" :value="__('Profile Picture')" style="color:var(--text, var(--quest-card-text, #4b3a2f)); font-weight:bold;" />
+            <x-input-label for="profile_picture" :value="__('Profile Picture')" style="color:var(--text, var(--quest-card-text, #4b3a2f)); font-weight:bold; font-family:var(--font-family,inherit);" />
             <input id="profile_picture" name="profile_picture" type="file" class="mt-1 block w-full" accept="image/*" />
             <x-input-error class="mt-2" :messages="$errors->get('profile_picture')" />
         </div>
@@ -70,8 +70,8 @@
         <!-- Avatar Frame Selection Dropdown -->
         @if(isset($allFrames) && count($allFrames))
         <div class="mb-4 flex flex-col items-center">
-            <label for="avatar_frame" style="color:var(--text, var(--quest-card-text, #4b3a2f)); font-weight:bold; margin-bottom: 0.5rem;">Avatar Frame</label>
-            <select id="avatar_frame" name="avatar_frame" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" style="max-width: 220px;">
+            <label for="avatar_frame" style="color:var(--text, var(--quest-card-text, #4b3a2f)); font-weight:bold; margin-bottom: 0.5rem; font-family:var(--font-family,inherit);">Avatar Frame</label>
+            <select id="avatar_frame" name="avatar_frame" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" style="max-width: 220px; color:var(--input-text, #222); background:var(--input-bg, #fff); font-family:var(--font-family,inherit);">
                 <option value="">No Frame</option>
                 @foreach($allFrames as $frame)
                     @php $locked = !in_array($frame->id, $unlockedFrames ?? []); @endphp
@@ -96,9 +96,9 @@
                             <span style="position: absolute; top: 8px; left: 8px; color: #b00; background: rgba(255,255,255,0.7); border-radius: 50%; padding: 2px;">
                                 <svg width="16" height="16" fill="none" viewBox="0 0 24 24"><path d="M17 11V7a5 5 0 0 0-10 0v4" stroke="#b00" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><rect x="5" y="11" width="14" height="10" rx="2" stroke="#b00" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
                             </span>
-                            <span style="font-size: 0.8rem; color: #b00;">Locked</span>
+                            <span style="font-size: 0.8rem; color: #b00; font-family:var(--font-family,inherit);">Locked</span>
                         @endif
-                        <span style="font-size: 0.85rem; color: #555;">{{ $frame->name }}</span>
+                        <span style="font-size: 0.85rem; color: #555; font-family:var(--font-family,inherit);">{{ $frame->name }}</span>
                     </div>
                 @endforeach
             </div>
@@ -114,7 +114,7 @@
                     x-show="show"
                     x-transition
                     x-init="setTimeout(() => show = false, 2000)"
-                    class="text-sm" style="color:var(--text, var(--quest-card-text, #4b3a2f)); opacity:0.85;"
+                    class="text-sm" style="color:var(--text, var(--quest-card-text, #4b3a2f)); opacity:0.85; font-family:var(--font-family,inherit);"
                 >{{ __('Saved.') }}</p>
             @endif
         </div>

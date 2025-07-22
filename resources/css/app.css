@@ -43,6 +43,57 @@ body[data-theme="night-owl"] textarea::placeholder {
   opacity: 1 !important;
 }
 
+select, option, optgroup {
+  color: var(--input-text, #222);
+  background: var(--input-bg, #fff);
+}
+body[data-theme="night-owl"] select,
+body[data-theme="night-owl"] option,
+body[data-theme="night-owl"] optgroup {
+  color: var(--input-text-night, #fff) !important;
+  background: var(--input-bg-night, #23243a) !important;
+}
+
+body[data-theme="night-owl"] {
+  --background: #181a2a;
+  --text: #c0caf5;
+  --date-bg: #232d4d;
+  --date-text: #e0e6f7;
+  --quest-container-bg: #23243a;
+  --container-text: #c0caf5;
+  --highlight-border: #7aa2f7;
+  --quest-card-bg: #23243a;
+  --quest-card-text: #c0caf5;
+  --dashboard-empty-text: #b5bfe2;
+  --calendar-bg: #232d4d;
+  --calendar-header-bg: #1a2238;
+  --calendar-header-text: #7aa2f7;
+  --calendar-border: #7aa2f7;
+  --calendar-day-bg: #23243a;
+  --calendar-day-text: #1a2238;
+  --calendar-today-bg: #7aa2f7;
+  --calendar-today-text: #23243a;
+  --calendar-dot-bg: #7aa2f7;
+  --calendar-grid-bg: #23243a;
+  --calendar-grid-text: #c0caf5;
+  --quest-desc-bg: #1e2030;
+  --quest-desc-text: #c0caf5;
+  --upcoming-bg: #7aa2f7;
+  --upcoming-text: #23243a;
+  --primary: #7aa2f7;
+  --modal-bg: #23243a;
+  --modal-text: #c0caf5;
+  --modal-header-bg: #7aa2f7;
+  --modal-btn-text: #23243a;
+  --modal-btn-cancel: #e74c3c;
+  --modal-btn-text-cancel: #fff;
+  --modal-btn-text-ok: #23243a;
+  --input-text: #c0caf5;
+  --input-bg: #181a2a;
+  --input-text-night: #c0caf5;
+  --input-bg-night: #23243a;
+}
+
 /* Responsive styles for smaller screens */
 @media (max-width: 600px) {
   .btn-green {

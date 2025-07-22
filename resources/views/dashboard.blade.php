@@ -22,7 +22,7 @@
         <!-- Date above the main container, aligned left -->
         <div style="width:100%; display:flex; align-items:center; margin-top:2.5rem; margin-left:3.5rem; margin-right:3.5rem; gap:1.5rem; position:relative;">
             <div style="display:flex; align-items:center; gap:1.2rem;">
-            <div style="background:var(--date-bg, #D2B78A); color:#fff; font-size:1.4rem; font-weight:bold; padding:0.5rem 1.8rem; border-radius:0.7rem; display: inline-block; align-self: flex-start;">{{ \Carbon\Carbon::now()->format('l, d F Y') }}</div>
+            <div style="background:var(--date-bg, #D2B78A); color:var(--date-text, #fff); font-size:1.4rem; font-weight:bold; padding:0.5rem 1.8rem; border-radius:0.7rem; display: inline-block; align-self: flex-start;">{{ \Carbon\Carbon::now()->format('l, d F Y') }}</div>
                 <button id="add-quest-top-btn" style="background:var(--primary, #7aa2f7); color:#fff; font-size:1.1rem; font-weight:bold; border:none; border-radius:0.7rem; padding:0.5rem 1.5rem; box-shadow:0 2px 8px #6e5445; cursor:pointer; display:flex; align-items:center; gap:0.7rem; transition:background 0.2s;">
                     <span style="font-size:1.3rem; font-weight:bold;">+</span> Add New Quest
                 </button>
@@ -39,7 +39,7 @@
                     <!-- Today's Quests Section -->
                     <div style="background:var(--quest-container-bg, #CAD7C3); border-radius:1.2rem; box-shadow:2px 2px 12px var(--container-shadow, #6e5445); padding:1.2rem 1.2rem; color:var(--container-text, #4b3a2f); border:2.5px solid var(--highlight-border, #7aa2f7);">
                     <div style="display:flex; justify-content:space-between; align-items:center; width:100%; margin-bottom:0.5rem;">
-                            <div style="background:#99C680; color:#fff; font-size:1.1rem; font-family:'Inter',sans-serif; font-weight:bold; border-radius:0.7rem; padding:0.4rem 1.5rem; letter-spacing:0.03em; width:auto; min-width:0; display:inline-block;">Today's Quests</div>
+                            <div style="background:var(--upcoming-bg, #99C680); color:#fff; font-size:1.1rem; font-family:'Inter',sans-serif; font-weight:bold; border-radius:0.7rem; padding:0.4rem 1.5rem; letter-spacing:0.03em; width:auto; min-width:0; display:inline-block;">Today's Quests</div>
                     </div>
                         @php
                             $today = \Carbon\Carbon::now('Asia/Jakarta')->toDateString();
@@ -401,10 +401,13 @@
                     </div>
                 </div>
                 <!-- Right: Calendar Widget -->
-                <div style="position:fixed; top:6.5rem; right:2.5rem; width:370px; height:420px; display:flex; flex-direction:column; align-items:center; background:var(--calendar-bg, #D2B78A); border-radius:1.2rem; padding:2.7rem 1.7rem 2.7rem 1.7rem; box-shadow:2px 2px 8px #6e5445; box-sizing: border-box; color:var(--container-text, #4b3a2f); border:2.5px solid var(--highlight-border, #7aa2f7); z-index:10;">
-                    <div style="position:absolute; top:0; left:0; right:0; height:56px; background:#403232; border-radius:1.2rem 1.2rem 0 0; display:flex; align-items:center; gap:0.7rem; justify-content:center; z-index:1;">
-                        <button id="prev-month-btn" style="background:none; border:none; color:#fff; font-size:1.3rem; cursor:pointer; margin-right:0.5rem;">&#8592;</button>
-                        <select id="calendar-month-select" style="font-size:1.1rem; border-radius:0.4rem; border:1.5px solid #b28b67; background:#fff; color:#403232; padding:0.1rem 1.7rem 0.1rem 0.5rem; margin:0 0.3rem; appearance: none; -webkit-appearance: none; -moz-appearance: none; background-image: url('data:image/svg+xml;utf8,<svg fill=%27%23403232%27 height=%2712%27 viewBox=%270 0 20 20%27 width=%2712%27 xmlns=%27http://www.w3.org/2000/svg%27><path d=%27M6 8l4 4 4-4%27 stroke=%27%23403232%27 stroke-width=%272%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27 fill=%27none%27/></svg>'); background-repeat: no-repeat; background-position: right 0.5rem center; background-size: 1rem;">
+                <div style="position:fixed; top:6.5rem; right:2.5rem; width:370px; height:420px; display:flex; flex-direction:column; align-items:center; background:var(--calendar-bg, #D2B78A); border-radius:1.2rem; padding:2.7rem 1.7rem 2.7rem 1.7rem; box-shadow:2px 2px 8px #6e5445; box-sizing: border-box; color:var(--container-text, #4b3a2f); border:2.5px solid var(--calendar-border, var(--highlight-border, #7aa2f7)); z-index:10;">
+                    <div style="position:absolute; top:0; left:0; right:0; height:56px; background:var(--calendar-top-bg, #403232); border-radius:1.2rem 1.2rem 0 0; display:flex; align-items:center; gap:0.7rem; justify-content:center; z-index:1; color:var(--calendar-header-text,#fff);">
+                        <button id="prev-month-btn" style="background:none; border:none; color:var(--calendar-header-text,#fff); font-size:1.3rem; cursor:pointer; margin-right:0.5rem;">&#8592;</button>
+                        <div style="position:fixed; top:6.5rem; right:2.5rem; width:370px; height:420px; display:flex; flex-direction:column; align-items:center; background:var(--calendar-bg, #D2B78A); border-radius:1.2rem; padding:2.7rem 1.7rem 2.7rem 1.7rem; box-shadow:2px 2px 8px #6e5445; box-sizing: border-box; color:var(--container-text, #4b3a2f); border:2.5px solid var(--highlight-border, #7aa2f7); z-index:10;">
+                    <div style="position:absolute; top:0; left:0; right:0; height:56px; background:var(--calendar-top-bg, #403232); border-radius:1.2rem 1.2rem 0 0; display:flex; align-items:center; gap:0.7rem; justify-content:center; z-index:1;">
+                        <button id="prev-month-btn" style="background:none; border:none; color:var(--calendar-header-text,#fff); font-size:1.3rem; cursor:pointer; margin-right:0.5rem;">&#8592;</button>
+                        <select id="calendar-month-select" style="font-size:1.1rem; border-radius:0.4rem; border:1.5px solid #b28b67; background:var(--calendar-header-bg, #fff); color:var(--calendar-header-text, #403232); padding:0.1rem 1.7rem 0.1rem 0.5rem; margin:0 0.3rem; appearance: none; -webkit-appearance: none; -moz-appearance: none; background-image: url('data:image/svg+xml;utf8,<svg fill=%27%23403232%27 height=%2712%27 viewBox=%270 0 20 20%27 width=%2712%27 xmlns=%27http://www.w3.org/2000/svg%27><path d=%27M6 8l4 4 4-4%27 stroke=%27%23403232%27 stroke-width=%272%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27 fill=%27none%27/></svg>'); background-repeat: no-repeat; background-position: right 0.5rem center; background-size: 1rem;">
                             <option value="0">January</option>
                             <option value="1">February</option>
                             <option value="2">March</option>
@@ -418,7 +421,7 @@
                             <option value="10">November</option>
                             <option value="11">December</option>
                         </select>
-                        <select id="calendar-year-select" style="font-size:1.1rem; border-radius:0.4rem; border:1.5px solid #b28b67; background:#fff; color:#403232; padding:0.1rem 1.7rem 0.1rem 0.5rem; margin:0 0.3rem; appearance: none; -webkit-appearance: none; -moz-appearance: none; background-image: url('data:image/svg+xml;utf8,<svg fill=%27%23403232%27 height=%2712%27 viewBox=%270 0 20 20%27 width=%2712%27 xmlns=%27http://www.w3.org/2000/svg%27><path d=%27M6 8l4 4 4-4%27 stroke=%27%23403232%27 stroke-width=%272%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27 fill=%27none%27/></svg>'); background-repeat: no-repeat; background-position: right 0.5rem center; background-size: 1rem;">
+                        <select id="calendar-year-select" style="font-size:1.1rem; border-radius:0.4rem; border:1.5px solid #b28b67; background:var(--calendar-header-bg, #fff); color:var(--calendar-header-text, #403232); padding:0.1rem 1.7rem 0.1rem 0.5rem; margin:0 0.3rem; appearance: none; -webkit-appearance: none; -moz-appearance: none; background-image: url('data:image/svg+xml;utf8,<svg fill=%27%23403232%27 height=%2712%27 viewBox=%270 0 20 20%27 width=%2712%27 xmlns=%27http://www.w3.org/2000/svg%27><path d=%27M6 8l4 4 4-4%27 stroke=%27%23403232%27 stroke-width=%272%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27 fill=%27none%27/></svg>'); background-repeat: no-repeat; background-position: right 0.5rem center; background-size: 1rem;">
                             <option value="2024">2024</option>
                             <option value="2025">2025</option>
                             <option value="2026">2026</option>
@@ -427,7 +430,7 @@
                             <option value="2029">2029</option>
                             <option value="2030">2030</option>
                         </select>
-                        <button id="next-month-btn" style="background:none; border:none; color:#fff; font-size:1.3rem; cursor:pointer; margin-left:0.5rem;">&#8594;</button>
+                        <button id="next-month-btn" style="background:none; border:none; color:var(--calendar-header-text,#fff); font-size:1.3rem; cursor:pointer; margin-left:0.5rem;">&#8594;</button>
                     </div>
                     <div id="calendar-grid" style="display:grid; grid-template-columns: repeat(7, 1fr); gap: 0.3rem; text-align: center; font-size:1rem; width:100%; justify-items:stretch; align-items:stretch; margin-top:1.2rem;"></div>
                         <div id="calendar-modal" style="display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(0,0,0,0.25); z-index:99999; align-items:center; justify-content:center;">

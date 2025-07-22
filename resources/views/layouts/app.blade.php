@@ -59,8 +59,9 @@
                     --quest-btn-complete: #9ece6a;
                     --quest-btn-delete: #f7768e;
                     --quest-btn-text: #fff;
-                    --quest-deadline-bg: #23243a;
+                    --quest-deadline-bg: #363a54;
                     --quest-deadline-text: #7aa2f7;
+                    --upcoming-bg: #7aa2f7;
                     --highlight-bg: rgba(122, 162, 247, 0.18);
                     --highlight-border: #fff;
                     --fab-bg: #7aa2f7;
@@ -73,12 +74,16 @@
                     --modal-btn-text: #fff;
                     --leaderboard-card-bg: #23243a;
                     --leaderboard-card-highlight-bg: #E6EFC2;
-                    --date-bg: #D2B78A;
-                    --calendar-bg: #D2B78A;
+                    --date-bg: #232d4d;
+                    --calendar-bg: #232d4d;
+                    --calendar-header-bg: #fff;
+                    --calendar-top-bg: #1a2238;
+                    --calendar-header-text: #7aa2f7;
+                    --calendar-day-text: #1a2238;
                     --level-circle-bg: #DD7A7A;
                     --level-circle-text: #fff;
-                    --quest-badge-bg-personal: #345222;
-                    --quest-badge-bg-daily: #99D877;
+                    --quest-badge-bg-personal: #363a54;
+                    --quest-badge-bg-daily: #7aa2f7;
                     --quest-badge-text-daily: #183408;
                 @elseif($theme->name == 'Monochrome')
                     --container-bg: #666;
@@ -375,6 +380,68 @@
                         setTimeout(function(){ toast.remove(); }, 500);
                     }
                 }, 2500);
+            </script>
+        @endif
+        <!-- @if(session('achievement_unlocked'))
+            <div style="position:fixed; top:1rem; right:1rem; background:#ffe066; color:#222; font-weight:bold; padding:0.7rem 1.5rem; border-radius:0.7rem; z-index:99999; box-shadow:0 2px 8px #ffe066;">
+                achievement_unlocked: {{ json_encode(session('achievement_unlocked')) }}
+            </div>
+        @endif -->
+        @php $ach = session()->pull('achievement_unlocked'); @endphp
+        @if($ach)
+            <div id="achievement-popup" style="position:fixed; bottom:2.5rem; right:2.5rem; background:#fffbe6; color:#403232; border-radius:1.2rem; box-shadow:0 6px 32px #0008; padding:1.5rem 2.5rem; min-width:320px; max-width:98vw; z-index:99999; display:flex; align-items:center; gap:1.2rem; border:3px solid #ffe066; font-family:'Inter',sans-serif; font-size:1.1rem; font-weight:bold;">
+                @switch($ach['icon'])
+                    @case('fire')
+                        <svg width="54" height="54" viewBox="0 0 32 32" fill="none" style="border-radius:0.7rem; background:#ffe066; box-shadow:0 2px 8px #ffe066;"><path d="M16 3C16 3 13 8 13 12C13 15 16 17 16 17C16 17 19 15 19 12C19 8 16 3 16 3Z" fill="#FFA726"/><path d="M16 29C21.5228 29 26 24.5228 26 19C26 13.4772 19 7 16 3C13 7 6 13.4772 6 19C6 24.5228 10.4772 29 16 29Z" fill="#FF7043"/><path d="M16 25C18.2091 25 20 23.2091 20 21C20 19.3431 16 15 16 15C16 15 12 19.3431 12 21C12 23.2091 13.7909 25 16 25Z" fill="#FFD54F"/></svg>
+                        @break
+                    @case('checkmark')
+                        <svg width="54" height="54" fill="none" viewBox="0 0 24 24" style="border-radius:0.7rem; background:#ffe066; box-shadow:0 2px 8px #ffe066;"><circle cx="12" cy="12" r="12" fill="#E8F5E9"/><path d="M9 16.2l-3.5-3.5 1.4-1.4L9 13.4l7.1-7.1 1.4 1.4z" fill="#4CAF50"/></svg>
+                        @break
+                    @case('bronze-medal')
+                        <svg width="54" height="54" fill="none" viewBox="0 0 24 24" style="border-radius:0.7rem; background:#ffe066; box-shadow:0 2px 8px #ffe066;"><circle cx="12" cy="12" r="12" fill="#FFF3E0"/><circle cx="12" cy="12" r="8" fill="#cd7f32"/><rect x="10" y="4" width="4" height="8" rx="2" fill="#b87333"/><circle cx="12" cy="12" r="4" fill="#fff"/></svg>
+                        @break
+                    @case('trophy')
+                        <svg width="54" height="54" fill="none" viewBox="0 0 24 24" style="border-radius:0.7rem; background:#ffe066; box-shadow:0 2px 8px #ffe066;"><rect x="7" y="3" width="10" height="4" rx="2" fill="#FFD700"/><rect x="9" y="7" width="6" height="7" rx="3" fill="#FFD700"/><rect x="10" y="14" width="4" height="2" rx="1" fill="#B8860B"/><rect x="8" y="16" width="8" height="2" rx="1" fill="#B8860B"/><ellipse cx="5" cy="7" rx="2" ry="4" fill="#FFD700"/><ellipse cx="19" cy="7" rx="2" ry="4" fill="#FFD700"/></svg>
+                        @break
+                    @case('plus-circle')
+                        <svg width="54" height="54" viewBox="0 0 24 24" fill="none" style="border-radius:0.7rem; background:#ffe066; box-shadow:0 2px 8px #ffe066;"><circle cx="12" cy="12" r="10" fill="#E3F2FD"/><path d="M12 8v8M8 12h8" stroke="#2196F3" stroke-width="2" stroke-linecap="round"/></svg>
+                        @break
+                    @case('calendar-check')
+                        <svg width="54" height="54" viewBox="0 0 24 24" fill="none" style="border-radius:0.7rem; background:#ffe066; box-shadow:0 2px 8px #ffe066;"><rect x="3" y="4" width="18" height="18" rx="2" fill="#E8F5E9"/><path d="M16 2v4M8 2v4M3 10h18M9 16l2 2 4-4" stroke="#4CAF50" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                        @break
+                    @case('arrow-up')
+                        <svg width="54" height="54" fill="none" viewBox="0 0 24 24" style="border-radius:0.7rem; background:#ffe066; box-shadow:0 2px 8px #ffe066;"><circle cx="12" cy="12" r="12" fill="#E3F2FD"/><path d="M12 19V5M12 5l-6 6M12 5l6 6" stroke="#1976D2" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                        @break
+                    @case('shield')
+                        <svg width="54" height="54" fill="none" viewBox="0 0 24 24" style="border-radius:0.7rem; background:#ffe066; box-shadow:0 2px 8px #ffe066;"><path d="M12 3l7 4v5c0 5.25-3.5 9.74-7 11-3.5-1.26-7-5.75-7-11V7l7-4z" fill="#90CAF9" stroke="#1976D2" stroke-width="2"/></svg>
+                        @break
+                    @default
+                    <span style="font-size:2.5rem;">🏆</span>
+                @endswitch
+                <div style="display:flex; flex-direction:column; gap:0.3rem; flex:1;">
+                    <span style="font-size:1.25rem; color:#e6b800; font-weight:bold;">Achievement Unlocked!</span>
+                    <span style="font-size:1.1rem; color:#403232; font-weight:bold;">{{ $ach['name'] }}</span>
+                    <span style="font-size:1rem; color:#555; font-weight:normal;">{{ $ach['description'] }}</span>
+                    <a href="{{ route('achievements.index') }}" style="margin-top:0.7rem; background:#99C680; color:#fff; font-size:1.05rem; font-weight:bold; border-radius:0.5rem; padding:0.4rem 1.2rem; text-decoration:none; display:inline-block; box-shadow:0 2px 8px #8fc97a; text-align:center;">View Achievement</a>
+                </div>
+                <button id="close-achievement-popup" style="background:none; border:none; color:#e74c3c; font-size:1.7rem; font-weight:bold; margin-left:1rem; cursor:pointer; border-radius:0.5rem; width:2.3rem; height:2.3rem; display:flex; align-items:center; justify-content:center; transition:background 0.2s;" title="Close">&times;</button>
+            </div>
+            <script>
+                var popup = document.getElementById('achievement-popup');
+                var closeBtn = document.getElementById('close-achievement-popup');
+                var fadeTimeout = setTimeout(function() {
+                    if (popup) {
+                        popup.style.opacity = '0';
+                        setTimeout(function(){ if(popup) popup.remove(); }, 400);
+                    }
+                }, 5000);
+                closeBtn.onclick = function() {
+                    clearTimeout(fadeTimeout);
+                    if (popup) {
+                        popup.style.opacity = '0';
+                        setTimeout(function(){ if(popup) popup.remove(); }, 400);
+                    }
+                };
             </script>
         @endif
         @stack('scripts')
